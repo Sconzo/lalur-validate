@@ -490,7 +490,7 @@ class TaxParameterControllerTest extends IntegrationTestBase {
   }
 
   // ==================================================================================
-  // Testes para ParameterNature (Story 2.11)
+  // Testes para ParameterNature
   // ==================================================================================
 
   @Test

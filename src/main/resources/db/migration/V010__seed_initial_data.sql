@@ -35,7 +35,7 @@ INSERT INTO tb_usuario (
     '$2a$12$qAYdO1nyZ3mndqAv.XvfJecnAwEtdc18gUwuJHfvuD0Gxh7AJntAC',
     'ADMIN',
     'ACTIVE',
-    false,
+    true,
     CURRENT_TIMESTAMP,
     1
 )

@@ -1,6 +1,6 @@
 -- ============================================================================
 -- V009: Criar tabela TaxParameterType e refatorar TaxParameter
--- Story: 2.12 - Entidade TaxParameterType e Refatoração de TaxParameter
+-- Entidade TaxParameterType e Refatoração de TaxParameter
 -- ============================================================================
 
 -- 1. Criar tabela tb_tipos_parametros_tributarios

@@ -30,7 +30,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 /**
- * Teste E2E do fluxo completo do CONTADOR (Story 2.10 - AC 1).
+ * Teste E2E do fluxo completo do CONTADOR.
  *
  * <p>Testa o workflow:
  * <ol>

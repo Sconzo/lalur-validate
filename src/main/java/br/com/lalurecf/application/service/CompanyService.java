@@ -25,6 +25,7 @@ import br.com.lalurecf.infrastructure.adapter.out.persistence.entity.EmpresaPara
 import br.com.lalurecf.infrastructure.adapter.out.persistence.entity.PeriodoContabilAuditEntity;
 import br.com.lalurecf.infrastructure.adapter.out.persistence.entity.TaxParameterEntity;
 import br.com.lalurecf.infrastructure.adapter.out.persistence.entity.TaxParameterTypeEntity;
+import br.com.lalurecf.infrastructure.adapter.out.persistence.entity.UserEntity;
 import br.com.lalurecf.infrastructure.adapter.out.persistence.entity.ValorParametroTemporalEntity;
 import br.com.lalurecf.infrastructure.adapter.out.persistence.repository.CompanyJpaRepository;
 import br.com.lalurecf.infrastructure.adapter.out.persistence.repository.CompanyTaxParameterJpaRepository;
@@ -32,6 +33,7 @@ import br.com.lalurecf.infrastructure.adapter.out.persistence.repository.Periodo
 import br.com.lalurecf.infrastructure.adapter.out.persistence.repository.PlanoDeContasJpaRepository;
 import br.com.lalurecf.infrastructure.adapter.out.persistence.repository.TaxParameterJpaRepository;
 import br.com.lalurecf.infrastructure.adapter.out.persistence.repository.TaxParameterTypeJpaRepository;
+import br.com.lalurecf.infrastructure.adapter.out.persistence.repository.UserJpaRepository;
 import br.com.lalurecf.infrastructure.adapter.out.persistence.repository.ValorParametroTemporalJpaRepository;
 import br.com.lalurecf.infrastructure.dto.company.CompanyDetailResponse;
 import br.com.lalurecf.infrastructure.dto.company.CompanyResponse;
@@ -98,6 +100,7 @@ public class CompanyService implements
   private final PeriodoContabilAuditJpaRepository periodoContabilAuditRepository;
   private final ValorParametroTemporalJpaRepository valorParametroTemporalRepository;
   private final PlanoDeContasJpaRepository planoDeContasRepository;
+  private final UserJpaRepository userRepository;
 
   @Override
   @Transactional
@@ -819,6 +822,8 @@ public class CompanyService implements
 
     List<TaxParameterEntity> parameters = taxParameterRepository.findAllById(parameterIds);
 
+    java.util.Map<Long, String> creatorEmails = resolveCreatorEmails(associations);
+
     // Verificar quais parâmetros têm valores temporais
     // Buscar todas as associações com valores temporais
     java.util.Set<Long> associationsWithTemporalValues = associations.stream()
@@ -842,8 +847,7 @@ public class CompanyService implements
             return null;
           }
 
-          // TODO: Buscar email do usuário pelo ID
-          String createdByEmail = "admin@example.com";
+          String createdByEmail = creatorEmails.get(assoc.getCreatedBy());
 
           boolean hasTemporalValues = associationsWithTemporalValues.contains(assoc.getId());
 
@@ -886,6 +890,28 @@ public class CompanyService implements
     // Principal agora é userId (Long), retornar formatado
     Long userId = (Long) authentication.getPrincipal();
     return "user-" + userId; // Formato simplificado para logging
+  }
+
+  /**
+   * Resolve os emails dos usuários criadores a partir dos IDs de auditoria.
+   *
+   * @param associations associações cujos criadores devem ser resolvidos
+   * @return mapa de ID do usuário para email
+   */
+  private java.util.Map<Long, String> resolveCreatorEmails(
+      List<CompanyTaxParameterEntity> associations) {
+    List<Long> creatorIds = associations.stream()
+        .map(CompanyTaxParameterEntity::getCreatedBy)
+        .filter(java.util.Objects::nonNull)
+        .distinct()
+        .toList();
+
+    if (creatorIds.isEmpty()) {
+      return Collections.emptyMap();
+    }
+
+    return userRepository.findAllById(creatorIds).stream()
+        .collect(Collectors.toMap(UserEntity::getId, UserEntity::getEmail));
   }
 
   /**
@@ -971,6 +997,8 @@ public class CompanyService implements
         ? Collections.emptyList()
         : taxParameterRepository.findAllById(parameterIds);
 
+    java.util.Map<Long, String> creatorEmails = resolveCreatorEmails(associations);
+
     java.util.Map<Long, CompanyTaxParameterEntity> associationMap = associations.stream()
         .collect(Collectors.toMap(
             CompanyTaxParameterEntity::getTaxParameterId,
@@ -1001,7 +1029,8 @@ public class CompanyService implements
     return stream
         .map(p -> {
           CompanyTaxParameterEntity assoc = associationMap.get(p.getId());
-          String createdByEmail = "admin@example.com"; // TODO: buscar email do usuário
+          String createdByEmail =
+              assoc != null ? creatorEmails.get(assoc.getCreatedBy()) : null;
           Long assocId = taxParamToAssocId.get(p.getId());
           boolean hasTemporalValues = assocId != null
               && associationsWithTemporalValues.contains(assocId);
@@ -1030,7 +1059,7 @@ public class CompanyService implements
   }
 
   // ==================================================================================
-  // Temporal Values Use Cases (Story 2.9)
+  // Temporal Values Use Cases
   // ==================================================================================
 
   @Override

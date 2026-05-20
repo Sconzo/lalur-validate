@@ -35,7 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * <p>O método principal {@link #generateArquivoParcial} retorna o conteúdo do
  * bloco M (sem M001) incluindo M990 ao final, pronto para ser envolto pelo
- * montador do arquivo parcial (Story 5.3).
+ * montador do arquivo parcial.
  */
 @Service
 @RequiredArgsConstructor
@@ -53,7 +53,7 @@ public class PartMGeneratorService {
    * Gera o conteúdo do bloco M para o arquivo parcial ECF.
    *
    * <p>Retorna todas as linhas M (Grupo1 IRPJ + Grupo2 CSLL + Grupo3 Parte B + M990)
-   * como string com separador de linha. O chamador (assembler da Story 5.3) deve
+   * como string com separador de linha. O chamador (montador do arquivo parcial) deve
    * adicionar a linha M001 antes deste conteúdo.
    *
    * @param companyId ID da empresa

@@ -467,7 +467,7 @@ class PlanoDeContasControllerTest {
     assertEquals("Caixa e Equivalentes de Caixa", account.getName());
   }
 
-  // ============================== CRUD MANUAL TESTS (Story 3.2) ==============================
+  // ============================== CRUD MANUAL TESTS ==============================
 
   @Test
   @WithMockUser(roles = "CONTADOR")

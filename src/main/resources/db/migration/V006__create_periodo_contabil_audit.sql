@@ -2,7 +2,7 @@
 -- Create Periodo Contabil Audit Table
 -- Version: V006
 -- Date: 2025-12-24
--- Story: 2.5 - Período Contábil e Bloqueio Temporal
+-- Período Contábil e Bloqueio Temporal
 -- ============================================================================
 --
 -- This migration creates the tb_periodo_contabil_audit table to store
@@ -47,7 +47,7 @@ CREATE INDEX IF NOT EXISTS idx_periodo_contabil_audit_changed_at
 -- ============================================================================
 
 COMMENT ON TABLE tb_periodo_contabil_audit IS
-    'Log de auditoria de alterações do Período Contábil de empresas (Story 2.5)';
+    'Log de auditoria de alterações do Período Contábil de empresas';
 
 COMMENT ON COLUMN tb_periodo_contabil_audit.company_id IS
     'FK para tb_empresa - empresa que teve o período contábil alterado';

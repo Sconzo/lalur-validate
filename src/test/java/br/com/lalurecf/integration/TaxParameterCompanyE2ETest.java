@@ -36,7 +36,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
- * Testes End-to-End do Epic 2 (Story 2.10).
+ * Testes End-to-End de integração.
  *
  * <p>Cobre os principais fluxos de integração:
  * <ul>
@@ -45,9 +45,9 @@ import org.springframework.test.web.servlet.MockMvc;
  *   <li>Row-level security via X-Company-Id
  * </ul>
  */
-@DisplayName("Epic 02 - Testes E2E")
+@DisplayName("Parâmetros Tributários e Empresas - Testes E2E")
 @AutoConfigureMockMvc
-class Epic02E2ETest extends IntegrationTestBase {
+class TaxParameterCompanyE2ETest extends IntegrationTestBase {
 
   @Autowired
   private MockMvc mockMvc;

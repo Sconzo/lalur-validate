@@ -50,7 +50,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 /**
- * Testes de Integração End-to-End do Epic 3.
+ * Testes de Integração End-to-End.
  *
  * <p>Valida fluxos completos de: - Contas Referenciais RFB - Plano de Contas - Lançamentos
  * Contábeis - Contas da Parte B - Lançamentos da Parte B
@@ -59,10 +59,10 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @AutoConfigureMockMvc
 @Testcontainers
 @Transactional
-@DisplayName("Epic 3 End-to-End Integration Tests")
+@DisplayName("Contabilidade - Testes E2E")
 @org.springframework.test.annotation.DirtiesContext(
     classMode = org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-class Epic3EndToEndTest {
+class ContabilidadeE2ETest {
 
   @Container
   static PostgreSQLContainer<?> postgres =

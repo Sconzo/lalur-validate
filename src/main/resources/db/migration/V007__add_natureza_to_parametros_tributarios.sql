@@ -1,5 +1,5 @@
 -- Migration: Add natureza column to tb_parametros_tributarios
--- Story: 2.11 - Enum de Natureza do Parâmetro Tributário
+-- Enum de Natureza do Parâmetro Tributário
 
 -- Step 1: Add column as nullable first
 ALTER TABLE tb_parametros_tributarios

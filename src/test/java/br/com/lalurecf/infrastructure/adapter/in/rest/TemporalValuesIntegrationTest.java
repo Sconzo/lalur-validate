@@ -39,7 +39,7 @@ import org.springframework.test.web.servlet.MockMvc;
 /**
  * Testes de integração para valores temporais de parâmetros tributários.
  *
- * <p>Story 2.9: Gestão de Valores Temporais de Parâmetros Tributários.
+ * <p>Gestão de Valores Temporais de Parâmetros Tributários.
  */
 @DisplayName("Temporal Values - Testes de Integração")
 @AutoConfigureMockMvc
